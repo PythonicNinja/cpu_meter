@@ -1,5 +1,9 @@
 # cpu_meter
 
+
+![client](https://i.imgur.com/e7axuNJ.png "Server output")
+
+
 # requirements
 python3.5
 

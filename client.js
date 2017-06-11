@@ -63,7 +63,7 @@ function updateChart(wsEvent) {
     if (chartData.length > 50) {
         chartData.splice(0, chartData.length - 50);
     }
-    writeToScreen("<span style='color: blue'>Received: " + wsEvent.data + "</span>");
+    writeToScreen("Received: " + wsEvent.data);
     chart.validateData();
 }
 
@@ -82,9 +82,5 @@ function onClose(wsEvent) {
 
 //For debug messaging
 function writeToScreen(message) {
-    var pre = document.createElement("p");
-    pre.style.wordWrap = "break-word";
-    pre.innerHTML = message;
-    serverLog.appendChild(pre);
-    serverLog.scrollTop = serverLog.scrollHeight;
+    console.log(message);
 }
