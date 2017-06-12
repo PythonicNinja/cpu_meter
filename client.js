@@ -5,6 +5,7 @@ var websocketEchoServerUri = "ws://127.0.0.1:5678/";
 var chartData = []; //will be updated by our simulated server
 var startButton = document.getElementById('start-demo');
 var endButton = document.getElementById('end-demo');
+var chartElement = document.getElementById('chartdiv');
 var chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "light",
@@ -54,11 +55,19 @@ var chart = AmCharts.makeChart("chartdiv", {
 
 startButton.addEventListener('click', startDemo);
 endButton.addEventListener('click', endDemo);
+window.addEventListener('resize', resizeChart);
+
+function resizeChart() {
+  console.log('resizeChart');
+  chartElement.style.height = (window.innerHeight - 20) + "px";
+  chartElement.style.width = window.innerWidth + "px";
+}
 
 function startDemo() {
     startButton.disabled = "disabled";
     endButton.disabled = "";
     websocket = initWebSocket(websocketEchoServerUri);
+    resizeChart();
 }
 
 function endDemo() {
