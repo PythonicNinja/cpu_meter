@@ -11,18 +11,21 @@ python3.5
 
 ## easy:
     
-    `./run.sh`
+    ./run.sh
 
 ## manual:
 
-1. run websocket server
+1. run websocket server:
 
-    `python3 server.py`
+    
+    python3 server.py
 
-2. run static server
+2. run static server:
 
-    `python3 -m http.server`
+    
+    python3 -m http.server
   
 3. open web browser
 
-    `open http://localhost:8000/client.html`
+    
+    open http://localhost:8000/client.html
