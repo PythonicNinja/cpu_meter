@@ -3,23 +3,44 @@ var websocket;
 
 var websocketEchoServerUri = "ws://127.0.0.1:5678/";
 var chartData = []; //will be updated by our simulated server
-var serverLog = document.getElementById("server-log");
 var startButton = document.getElementById('start-demo');
 var endButton = document.getElementById('end-demo');
 var chart = AmCharts.makeChart("chartdiv", {
     "type": "serial",
     "theme": "light",
-    "dataDateFormat": "YYYY-MM-DD",
     "valueAxes": [{
         "id": "v1",
         "position": "left"
     }],
-    "graphs": [{
-        "id": "g1",
-        "bullet": "round",
-        "valueField": "value",
-        "balloonText": "[[category]]: [[value]]"
-    }],
+    "graphs": [
+        {
+            "title": "user",
+            "valueField": "user",
+            "bullet": "round",
+            "bulletSize": 10,
+            "bulletBorderColor": "#ffffff",
+            "bulletBorderAlpha": 1,
+            "bulletBorderThickness": 2
+        },
+        {
+            "title": "system",
+            "valueField": "sys",
+            "bullet": "round",
+            "bulletSize": 10,
+            "bulletBorderColor": "#ffffff",
+            "bulletBorderAlpha": 1,
+            "bulletBorderThickness": 2
+        },
+        {
+            "title": "idle",
+            "valueField": "idle",
+            "bullet": "round",
+            "bulletSize": 10,
+            "bulletBorderColor": "#ffffff",
+            "bulletBorderAlpha": 1,
+            "bulletBorderThickness": 2
+        }
+    ],
     "categoryField": "date",
     "categoryAxis": {
         "parseDates": true,
@@ -27,7 +48,8 @@ var chart = AmCharts.makeChart("chartdiv", {
         "dashLength": 1,
         "minorGridEnabled": true
     },
-    "dataProvider": chartData
+    "dataProvider": chartData,
+    "legend": {}
 });
 
 startButton.addEventListener('click', startDemo);
@@ -58,7 +80,14 @@ function initWebSocket(wsUri) {
 function updateChart(wsEvent) {
     var newData = JSON.parse(wsEvent.data);
 
-    chartData.push.apply(chartData, [{"date": newData.ts, "value": newData.data['1m']}]);
+    chartData.push.apply(chartData, [
+        {
+            "date": newData.ts,
+            "user": newData.data.user,
+            "sys": newData.data.sys,
+            "idle": newData.data.idle
+        }
+    ]);
     // keep only 50 datapoints on screen for the demo
     if (chartData.length > 50) {
         chartData.splice(0, chartData.length - 50);

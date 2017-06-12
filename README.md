@@ -1,7 +1,7 @@
 # cpu_meter
 
 
-![client](https://i.imgur.com/e7axuNJ.png "Server output")
+![client](https://i.imgur.com/WEBX7HL.png "Server output")
 
 
 # requirements

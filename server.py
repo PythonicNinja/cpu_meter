@@ -12,20 +12,20 @@ async def cpu_usage(websocket, path):
     while True:
         now = datetime.datetime.utcnow().isoformat() + 'Z'
         process = await asyncio.create_subprocess_shell(
-            "iostat -n cpu",
+            "top | head -n 4 | tail -n 1",
             stdin=PIPE,
             stdout=PIPE,
             stderr=STDOUT
         )
         stdout_data, stderr_data = await process.communicate()
         cpu_usage = stdout_data.decode("utf-8")
-        lines = cpu_usage.split("\n")
-        header_items = lines[1].split()
-        values = lines[2].split()
-        cpu_data = dict(zip(header_items, values))
+        lines = cpu_usage.split(":")[1].split(',')
         output = {
             'ts': now,
-            'data': cpu_data,
+            'data': {
+                line.split()[1].strip(): line.split()[0].split('%')[0]
+                for line in lines
+            },
         }
         await websocket.send(json.dumps(output))
         await asyncio.sleep(0.5)
